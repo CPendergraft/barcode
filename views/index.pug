@@ -40,6 +40,7 @@ block content
 
         var itemlist = [];
         var taxRate = .10;
+        var tax = 0;
         var currentItem = {};
         var subTotal = 0;
         var total = 0;
@@ -127,12 +128,12 @@ block content
 
             html += '<span class="';
             html += 'productName">';
-            html += "TaxRate";
+            html += "Taxs";
             html += '<\/span>';
 
             html += '<span class="';
             html += 'productName">';
-            html += (taxRate *100)+'%';
+            html += tax.toFixed(2);
             html += '<\/span>';
             html += '<\/li>';
 
@@ -173,7 +174,8 @@ block content
         }
         function getTotal() {
             var sub = getSubTotal()
-            return ((sub * taxRate) + sub).toFixed(2);
+            tax = (sub * taxRate);
+            return ( tax + sub).toFixed(2);
         }
         function addItem(response) {
 
@@ -257,6 +259,25 @@ block content
 
         function exitCart() {
             buildPrinterList();
+            var html = '';
+            html += '<li>';
+            html += '<span class="';
+            html += 'objectId">';
+            html += '--------';
+            html += '<\/span>';
+
+
+            html += '<span class="';
+            html += 'productName">';
+            html += "SHOPPING TOTAL";
+            html += '<\/span>';
+
+            html += '<span class="';
+            html += 'productPrice">';
+            html += total;
+            html += '<\/span>';
+            html += '<\/li>';
+            document.getElementById('lcd').innerHTML = html;
 
 
         }
