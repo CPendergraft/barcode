@@ -1,0 +1,235 @@
+extends layout
+
+block content
+    .indexPage
+        .uicontainter
+            .barCodeContainer
+                h3 Click Below on UPC to add to cart
+                ul#barcodelist
+                    each val, index in result
+                        li(id=`${ index + val.objectId}` onclick=`lookupById(${"'"+ val.objectId +"'"}, (${"'"+ index +"'"} + ${"'"+ val.objectId +"'"}));`)
+                            svg(id=val.objectId)
+                            script.
+                                var item="#{val.objectId}";
+                                var element = document.getElementById(item);
+                                JsBarcode(element,item);
+
+
+
+
+            .LCDPrinterContainer
+                .LCDContainer
+                   ul#lcd
+                .buttonHold
+                   div#exitBtn.exitButton(onclick='exitCart()')
+                     p Print and Exit
+
+
+                .PrinterContainer
+                    ul#printer
+
+
+
+
+
+
+
+
+
+    script(type='text/javascript').
+
+        var itemlist = [];
+        var taxRate = .10;
+        var currentItem = {};
+        var subTotal = 0;
+        var total = 0;
+        var printsrtring = '';
+        var showButton = false;
+
+        function setLCDScreen(){
+            var html = '';
+
+            html += '<li>';
+            html += '<span class="';
+            html += 'objectId">';
+            html += currentItem.objectId;
+            html += '<\/span>';
+
+
+            html += '<span class="';
+            html += 'productName">';
+            html += currentItem.product_name;
+            html += '<\/span>';
+
+            html += '<span class="';
+            html += 'productPrice">';
+            html += currentItem.price;
+            html += '<\/span>';
+            html += '<\/li>';
+            document.getElementById('lcd').innerHTML = html;
+
+
+        }
+        function buildPrinterList() {
+
+            var html = '';
+
+
+            itemlist.reverse().map(function (value) {
+
+                html += '<li>';
+                html += '<span class="';
+                html += 'objectId">';
+                html += value.objectId;
+                html += '<\/span>';
+
+
+                html += '<span class="';
+                html += 'productName">';
+                html += value.product_name;
+                html += '<\/span>';
+
+                html += '<span class="';
+                html += 'productName">';
+                html += value.price;
+                html += '<\/span>';
+                html += '<\/li>';
+
+
+
+            })
+
+
+            html += '<li>';
+            html += '<span class="';
+            html += 'objectId">';
+            html += "------";
+            html += '<\/span>';
+
+
+            html += '<span class="';
+            html += 'productName">';
+            html += "Subtotal";
+            html += '<\/span>';
+
+            html += '<span class="';
+            html += 'productName">';
+            html += subTotal;
+            html += '<\/span>';
+            html += '<\/li>';
+
+            html += '<li>';
+            html += '<span class="';
+            html += 'objectId">';
+            html += "------";
+            html += '<\/span>';
+
+
+            html += '<span class="';
+            html += 'productName">';
+            html += "TaxRate";
+            html += '<\/span>';
+
+            html += '<span class="';
+            html += 'productName">';
+            html += (taxRate *100)+'%';
+            html += '<\/span>';
+            html += '<\/li>';
+
+            html += '<li>';
+            html += '<span class="';
+            html += 'objectId">';
+            html += "------";
+            html += '<\/span>';
+
+
+            html += '<span class="';
+            html += 'productName">';
+            html += "Total";
+            html += '<\/span>';
+
+            html += '<span class="';
+            html += 'productName">';
+            html += total;
+            html += '<\/span>';
+            html += '<\/li>';
+
+
+            document.getElementById('printer').innerHTML = html;
+            showButton = true;
+        }
+        
+        function getSubTotal(){
+
+            var total =0;
+            itemlist.map(function (value) {
+                var price = parseFloat(value.price);
+                total += price;
+
+            })
+            subTotal = total.toFixed(2);
+            return total;
+
+        }
+        function getTotal() {
+            var sub = getSubTotal()
+            return ((sub * taxRate) + sub).toFixed(2);
+        }
+        function addItem(response) {
+
+
+            console.log(response);
+            itemlist.push(response);
+            currentItem =response;
+            total = getTotal();
+            setLCDScreen();
+            document.getElementById('exitBtn').style.display = 'block';
+
+
+            
+
+
+
+        }
+
+        function lookupById(searchId, id) {
+
+
+
+            console.log(searchId, id);
+            var update = function(val){
+                addItem(val);
+            }
+
+            var res = {};
+            var http = new XMLHttpRequest();
+            var url = '/lookup/' + searchId;
+            http.open('POST', url, true);
+
+            http.setRequestHeader('Content-type', 'application/json');
+            http.onload = function (data) {
+
+                update(JSON.parse(this.responseText).results);
+                if(showButton){
+                    document.getElementById('exitBtn').innerHTML = '<p>Update Total</p>';
+                }
+                document.getElementById(id).style.backgroundColor = '#5d8a65';
+            }
+
+            http.send();
+
+
+
+        }
+
+
+
+        function exitCart() {
+            buildPrinterList();
+
+
+        }
+        window.onload = function(event){
+
+
+        }

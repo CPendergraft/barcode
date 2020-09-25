@@ -1,0 +1,142 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.indexPage{
+
+  width: 100vw;
+  display: flex;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: #0b0b0b;
+
+
+}
+.uicontainter{
+  width:90vw;
+  display: flex;
+  min-height: 800px;
+
+}
+.barCodeContainer{
+  margin-top: 20px;
+  padding-left: 20px;
+  width: 30%;
+  min-width: 380px;
+  background-color: darkgray;
+
+}
+.barCodeContainer ul{
+  width: 30%;
+  list-style: none;
+
+}
+.barCodeContainer li{
+  width: 100%;
+  min-width: 380px;
+  background-color: #767676;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+}
+.barCodeContainer li:hover{
+  background-color: #838383;
+}
+.barCodeContainer svg{
+  width: 100%;
+}
+
+.LCDPrinterContainer{
+  width: 70%;
+  display: block;
+  background-color: #8b8b8b;
+  margin: 10px;
+
+}
+.buttonHold{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  margin-bottom: 20px;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  background-color: #3d3d3f;
+}
+.LCDContainer{
+  overflow: hidden;
+  width: 100%;
+  height: 50px!important;
+  border: solid 1px #2e774f;
+  background-color: #3b7a3b;
+  margin-bottom: 0px;
+  box-shadow: inset 3px 4px 5px #000000;
+
+}
+.LCDContainer ul{
+  display: block;
+  min-height: 35px;
+
+}
+.LCDContainer li{
+  display: inline-flex;
+  margin-bottom: 15px;
+  font-size: 1em;
+  color: white;
+
+
+}
+.PrinterContainer{
+  width: 100%;
+  margin-top: 30px;
+  border: solid 1px #808080;
+  color: black;
+  min-height: 350px;
+  background-color: #ffffff;
+
+}
+.PrinterContainer ul{
+  display: block;
+  min-height: 35px;
+
+}
+.PrinterContainer li{
+  display: inline-flex;
+  margin-bottom: 15px;
+
+
+}
+
+.exitButton{
+  display: none;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: .7em;
+  background-color: orangered;
+  color: white;
+  cursor: pointer;
+}
+
+.objectId{
+  width: 40%;
+  min-width: 350px;
+}
+.productName{
+  width: 40%;
+  min-width: 350px;
+  text-align: center;
+}
+.productPrice{
+  width: 20%;
+}
+
+
