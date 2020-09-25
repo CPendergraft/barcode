@@ -196,7 +196,7 @@ block content
 
 
 
-            console.log(searchId, id);
+
             var update = function(val){
                 addItem(val);
             }
@@ -209,11 +209,42 @@ block content
             http.setRequestHeader('Content-type', 'application/json');
             http.onload = function (data) {
 
-                update(JSON.parse(this.responseText).results);
-                if(showButton){
-                    document.getElementById('exitBtn').innerHTML = '<p>Update Total</p>';
+
+                var status = (JSON.parse(this.responseText).results);
+                if(status.status != 404){
+
+
+                    if (showButton) {
+                        document.getElementById('exitBtn').innerHTML = '<p>Update Total</p>';
+                    }
+                    document.getElementById(id).style.backgroundColor = '#5d8a65';
+                    update(status);
+
+                }else{
+                    var html ='';
+                    html += '<li>';
+                    html += '<span class="';
+                    html += 'objectId">';
+                    html += '--------';
+                    html += '<\/span>';
+
+
+                    html += '<span class="';
+                    html += 'productName">';
+                    html += "PRODUCT NOT FOUND";
+                    html += '<\/span>';
+
+                    html += '<span class="';
+                    html += 'productPrice">';
+                    html += '--------';
+                    html += '<\/span>';
+                    html += '<\/li>';
+                    document.getElementById('lcd').innerHTML = html;
+                    document.getElementById(id).style.backgroundColor = '#8a211e';
                 }
-                document.getElementById(id).style.backgroundColor = '#5d8a65';
+
+                //check for match- if none id found, mark the item red and display 'Product not found'
+
             }
 
             http.send();

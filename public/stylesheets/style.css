@@ -26,6 +26,7 @@ a {
 
 }
 .barCodeContainer{
+  overflow: hidden;
   margin-top: 20px;
   padding-left: 20px;
   width: 30%;

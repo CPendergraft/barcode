@@ -23,7 +23,19 @@ router.get('/', function (req, res, next) {
 
             console.log(obj);
 
-            res.render( 'index', {title:'Welcome to Checkout', result:obj});
+            var badObject =  {
+                    price: 9.99,
+                    created: 1600993289000,
+                    ___class: 'Barcodes',
+                    ownerId: null,
+                    product_name: 'M95 Masks 10 count',
+                    updated: 1600993307000,
+                    objectId: 'A4FF3429-F0F4-424B-B3CE-280274F82193' };
+
+                    obj.push(badObject);
+
+
+                res.render( 'index', {title:'Welcome to Checkout', result:obj});
 
 
         });
