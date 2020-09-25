@@ -1,4 +1,4 @@
-This project Uses NodeJS  and Pug
+This project uses NodeJS  and Pug
 
 ## Barcode Point of sale example
 
